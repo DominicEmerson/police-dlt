@@ -26,10 +26,23 @@ Edit
 - ✅ Custom chaincode `incidentcc` written in Go
 - ✅ Chaincode deployed and successfully invoked on `mychannel`
 - ✅ Chaincode operations:
-  - `InitLedger`: preload sample incident
-  - `CreateIncident`: add new reports
-  - `GetAllIncidents`: query all incidents
-  - `ReadIncident`, `UpdateIncidentStatus`, etc.
+- **InitLedger**  
+  Preload the ledger with a sample `Incident` record (including `Updates` and `VisibleTo`).
+
+- **CreateIncident(incidentID, location, description, priority, assignedStation, visibleToJSON)**  
+  Create a new `Incident` with:
+  - Auto-stamped `timestamp` and `lastUpdated`
+  - Required fields: `location`, `description`, `priority`, `assignedStation`
+  - Optional `visibleTo` list (defaults to creator’s org + CentralCommand)
+
+- **ReadIncident(incidentID)**  
+  Retrieve a single `Incident` by its key.
+
+- **GetAllIncidents**  
+  Return all `Incident` records in the ledger.
+
+- **UpdateIncidentStatus(incidentID, newStatus, note)**  
+  Change an incident’s `status`, append a new entry to the `Updates` array (with `timestamp`, `note`, and `author`), and refresh `lastUpdated`.
 
 ---
 
